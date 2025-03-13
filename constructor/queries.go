@@ -163,7 +163,7 @@ var QUERIES = []Query{
 
 	Q("container_http_requests_count", `rate(container_http_requests_total[$RANGE])`, "status"),
 	Q("container_http_requests_latency", `rate(container_http_requests_duration_seconds_total_sum [$RANGE]) / rate(container_http_requests_duration_seconds_total_count [$RANGE])`),
-	Q("container_http_requests_histogram", `rate(container_http_requests_duration_seconds_total_bucket[$RANGE])`, "le"),
+	Q("container_http_requests_histogram", `rate(container_http_requests_duration_seconds_total_bucket[$RANGE]) > 0.1`, "le"),
 	Q("container_postgres_queries_count", `rate(container_postgres_queries_total[$RANGE])`, "status"),
 	Q("container_postgres_queries_latency", `rate(container_postgres_queries_duration_seconds_total_sum [$RANGE]) / rate(container_postgres_queries_duration_seconds_total_count [$RANGE])`),
 	Q("container_postgres_queries_histogram", `rate(container_postgres_queries_duration_seconds_total_bucket[$RANGE])`, "le"),
@@ -194,7 +194,7 @@ var QUERIES = []Query{
 	Q("container_rabbitmq_messages", `rate(container_rabbitmq_messages_total[$RANGE])`, "status", "method"),
 	Q("container_nats_messages", `rate(container_nats_messages_total[$RANGE])`, "status", "method"),
 
-	Q("container_dns_requests_total", `rate(container_dns_requests_total[$RANGE])`, "request_type", "domain", "status"),
+	Q("container_dns_requests_total", `rate(container_dns_requests_total[$RANGE]) > 0.1`, "request_type", "domain", "status"),
 	Q("container_dns_requests_latency", `rate(container_dns_requests_duration_seconds_total_bucket[$RANGE])`, "le"),
 
 	Q("aws_discovery_error", `aws_discovery_error`, "error"),
